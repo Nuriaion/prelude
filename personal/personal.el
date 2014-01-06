@@ -46,11 +46,53 @@
 
 
 (require 'clj-refactor)
+
 (add-hook 'clojure-mode-hook (lambda ()
                                (clj-refactor-mode 1)
                                ;; insert keybinding setup here
                                (cljr-add-keybindings-with-prefix "M-r")
                                ))
+
+;;(add-hook 'clojure-mode-hook 'esk-pretty-fn)
+;;(add-hook 'prog-mode-hook 'esk-pretty-lambdas)
+;;(add-hook 'clojure-mode-hook 'esk-pretty-lambdas)
+
+(auto-complete-mode)
+(setq pretty-symbol-categories '(lambda relational logical))
+(require 'pretty-symbols)
+(add-hook 'clojure-mode-hook 'pretty-symbols-mode)
+(add-hook 'cider-repl-mode-hook 'pretty-symbols-mode)
+(setq pretty-symbol-categories '(lambda relational logical))
+(add-to-list 'pretty-symbol-patterns
+             '(?ƒ lambda "(\\(fn\\)\\>" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?λ lambda "\\(#\\)(" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?∈ lambda "\\(#\\){" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?≠ lambda "!=" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?≠ lambda "/=" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?≥ lambda ">=" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?≤ lambda "<=" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?∧ lambda "&&" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?∧ lambda "\\<and\\>" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?∨ lambda "||" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?∨ lambda "\\<or\\>" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?¬ lambda "\\<not\\>" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?∅ lambda "nil" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?√ lambda "sqrt" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?∑ lambda "sum" (clojure-mode cider-repl-mode) 1))
 
 
 
