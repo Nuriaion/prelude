@@ -15,7 +15,7 @@
 ;;(add-hook 'clojure-mode-hook '(lambda () (define-key clojure-mode-map "\M-{" 'paredit-wrap-curly)))
 
 ;;(define-key paredit-mode-map (kbd "M-S-5") 'paredit-wrap-square)
-(load-theme 'solarized-dark t)
+;;(load-theme 'solarized-dark t)
 
 (require 'ac-nrepl)
 (add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
@@ -58,6 +58,10 @@
 ;;(add-hook 'clojure-mode-hook 'esk-pretty-lambdas)
 
 (auto-complete-mode)
+(global-auto-complete-mode 1)
+
+(guru-global-mode -1)
+
 (setq pretty-symbol-categories '(lambda relational logical))
 (require 'pretty-symbols)
 (add-hook 'clojure-mode-hook 'pretty-symbols-mode)
