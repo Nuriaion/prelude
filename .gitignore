@@ -21,3 +21,5 @@ session*
 .cask
 ac-comphist.dat
 .mc-lists.el
+tramp
+/var/pcache
