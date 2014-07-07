@@ -66,15 +66,21 @@
 (require 'pretty-symbols)
 (add-hook 'clojure-mode-hook 'pretty-symbols-mode)
 (add-hook 'cider-repl-mode-hook 'pretty-symbols-mode)
+(add-hook 'extempore-mode-hook 'pretty-symbols-mode)
+(add-hook 'prog-mode-hook 'pretty-symbols-mode)
 (setq pretty-symbol-categories '(lambda relational logical))
 (add-to-list 'pretty-symbol-patterns
              '(?ƒ lambda "(\\(fn\\)\\>" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?λ lambda "(\\(lambda\\)\\>" (clojure-mode cider-repl-mode extempore-mode prog-mode) 1))             
 (add-to-list 'pretty-symbol-patterns
              '(?λ lambda "\\(#\\)(" (clojure-mode cider-repl-mode) 1))
 (add-to-list 'pretty-symbol-patterns
              '(?∈ lambda "\\(#\\){" (clojure-mode cider-repl-mode) 1))
 (add-to-list 'pretty-symbol-patterns
              '(?≠ lambda "!=" (clojure-mode cider-repl-mode) 1))
+(add-to-list 'pretty-symbol-patterns
+             '(?≠ lambda "<>" (clojure-mode cider-repl-mode extempore-mode prog-mode) 1))
 (add-to-list 'pretty-symbol-patterns
              '(?≠ lambda "/=" (clojure-mode cider-repl-mode) 1))
 (add-to-list 'pretty-symbol-patterns
@@ -96,9 +102,41 @@
 (add-to-list 'pretty-symbol-patterns
              '(?√ lambda "sqrt" (clojure-mode cider-repl-mode) 1))
 (add-to-list 'pretty-symbol-patterns
-             '(?∑ lambda "sum" (clojure-mode cider-repl-mode) 1))
+             '(?∑ lambda "sum" (clojure-mode cider-repl-mode extempore-mode) 1))
 
+(setq visible-bell t)
+(setq inhibit-startup-message t)
 
+(projectile-global-mode)
+(setq projectile-enable-caching t)
+
+(require 'flx-ido)
+(ido-mode 1)
+(ido-everywhere 1)
+(flx-ido-mode 1)
+;; disable ido faces to see flx highlights.
+(setq ido-use-faces nil)
+
+(defadvice isearch-repeat (after isearch-no-fail activate)
+  (unless isearch-success
+    (ad-disable-advice 'isearch-repeat 'after 'isearch-no-fail)
+    (ad-activate 'isearch-repeat)
+    (isearch-repeat (if isearch-forward 'forward))
+    (ad-enable-advice 'isearch-repeat 'after 'isearch-no-fail)
+    (ad-activate 'isearch-repeat)))
+
+(setq user-extempore-directory "/usr/local/Cellar/extempore/0.51/")
+
+(autoload 'extempore-mode (concat user-extempore-directory "extras/extempore.el") "" t)
+(add-to-list 'auto-mode-alist '("\\.xtm$" . extempore-mode))
+
+(autoload #'llvm-mode (concat user-extempore-directory "extras/llvm-mode.el")
+  "Major mode for editing LLVM IR files" t)
+
+(add-to-list 'auto-mode-alist '("\\.ir$" . llvm-mode))
+(add-to-list 'auto-mode-alist '("\\.ll$" . llvm-mode))
+
+(setq prelude-guru nil)
 
 (provide 'personal)
 ;;; personal.el ends here
