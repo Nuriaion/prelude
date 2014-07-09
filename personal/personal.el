@@ -72,7 +72,7 @@
 (add-to-list 'pretty-symbol-patterns
              '(?ƒ lambda "(\\(fn\\)\\>" (clojure-mode cider-repl-mode) 1))
 (add-to-list 'pretty-symbol-patterns
-             '(?λ lambda "(\\(lambda\\)\\>" (clojure-mode cider-repl-mode extempore-mode prog-mode) 1))             
+             '(?λ lambda "(\\(lambda\\)\\>" (clojure-mode cider-repl-mode extempore-mode prog-mode) 1))
 (add-to-list 'pretty-symbol-patterns
              '(?λ lambda "\\(#\\)(" (clojure-mode cider-repl-mode) 1))
 (add-to-list 'pretty-symbol-patterns
@@ -137,6 +137,20 @@
 (add-to-list 'auto-mode-alist '("\\.ll$" . llvm-mode))
 
 (setq prelude-guru nil)
+
+(require 'key-chord)
+(key-chord-mode 1)
+(key-chord-define evil-insert-state-map  "jj" 'evil-normal-state)
+
+(key-chord-define-global "ff" 'ace-jump-word-mode)
+(key-chord-define-global "fd" 'ace-jump-line-mode)
+(key-chord-define-global "fs" 'ace-jump-char-mode)
+(key-chord-define-global "JJ" 'prelude-switch-to-previous-buffer)
+(key-chord-define-global "uu" 'undo-tree-visualize)
+(key-chord-define-global "ww" 'execute-extended-command)
+(key-chord-define-global "yy" 'browse-kill-ring)
+
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
 (provide 'personal)
 ;;; personal.el ends here
